@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Routing;
+using OdeToFood.Services;
+using OdeToFood.Interfaces;
 
 namespace OdeToFood
 {
@@ -34,8 +36,11 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            //Singleton - only one instance of service for entire application
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
+            //Scoped, one instance for each HTTP request.
+            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
